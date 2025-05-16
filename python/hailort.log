@@ -1,0 +1,56 @@
+[2025-05-16 16:55:37.958] [30028] [HailoRT] [info] [vdevice.cpp:523] [create] Creating vdevice with params: device_count: 1, scheduling_algorithm: ROUND_ROBIN, multi_process_service: false
+[2025-05-16 16:55:37.970] [30028] [HailoRT] [info] [device.cpp:49] [Device] OS Version: Linux 6.12.20+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.12.20-1+rpt1~bpo12+1 (2025-03-19) aarch64
+[2025-05-16 16:55:37.972] [30028] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-05-16 16:55:37.972] [30028] [HailoRT] [info] [vdevice.cpp:651] [create] VDevice Infos: 0001:03:00.0
+[2025-05-16 16:55:37.973] [30028] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-05-16 16:55:38.113] [30028] [HailoRT] [info] [hef.cpp:1929] [get_network_group_and_network_name] No name was given. Addressing all networks of default network_group: yolov5s_personface
+[2025-05-16 16:55:38.113] [30028] [HailoRT] [info] [hef.cpp:1929] [get_network_group_and_network_name] No name was given. Addressing all networks of default network_group: yolov5s_personface
+[2025-05-16 16:55:38.116] [30028] [HailoRT] [warning] [device_internal.cpp:616] [check_hef_is_compatible] HEF was compiled for Hailo8L device, while the device itself is Hailo8. This will result in lower performance.
+[2025-05-16 16:55:38.116] [30028] [HailoRT] [warning] [device_internal.cpp:616] [check_hef_is_compatible] HEF was compiled for Hailo8L device, while the device itself is Hailo8. This will result in lower performance.
+[2025-05-16 16:55:38.125] [30028] [HailoRT] [info] [internal_buffer_manager.cpp:204] [print_execution_results] Planned internal buffer memory: CMA memory 0, user memory 1969664. memory to edge layer usage factor is 1
+[2025-05-16 16:55:38.125] [30028] [HailoRT] [info] [internal_buffer_manager.cpp:212] [print_execution_results] Default Internal buffer planner executed successfully
+[2025-05-16 16:55:38.154] [30028] [HailoRT] [info] [device_internal.cpp:57] [configure] Configuring HEF took 38.2907 milliseconds
+[2025-05-16 16:55:38.155] [30028] [HailoRT] [info] [vdevice.cpp:749] [configure] Configuring HEF on VDevice took 41.022991 milliseconds
+[2025-05-16 16:55:38.155] [30028] [HailoRT] [info] [infer_model.cpp:436] [configure] Configuring network group 'yolov5s_personface' with params: batch size: 0, power mode: PERFORMANCE, latency: MEASURE
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [multi_io_elements.cpp:756] [create] Created (AsyncHwEl)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [queue_elements.cpp:450] [create] Created (EntryPushQEl0yolov5s_personface/input_layer1 | timeout: 10s)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl0yolov5s_personface/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [queue_elements.cpp:450] [create] Created (PushQEl0yolov5s_personface/input_layer1 | timeout: 10s)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [multi_io_elements.cpp:135] [create] Created (NmsPPMuxEl0YOLOv5-Post-Process | Op YOLOV5, Name: YOLOv5-Post-Process, Score threshold: 0.200, IoU threshold: 0.60, Classes: 2, Cross classes: false, NMS results order: BY_CLASS, Max bboxes per class: 80, Image height: 640, Image width: 640)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [queue_elements.cpp:942] [create] Created (MultiPushQEl0YOLOv5-Post-Process | timeout: 10s)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [edge_elements.cpp:187] [create] Created (LastAsyncEl0NmsPPMuxEl0YOLOv5-Post-Process)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] EntryPushQEl0yolov5s_personface/input_layer1 | inputs: user | outputs: PreInferEl0yolov5s_personface/input_layer1(running in thread_id: 30047)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] PreInferEl0yolov5s_personface/input_layer1 | inputs: EntryPushQEl0yolov5s_personface/input_layer1[0] | outputs: PushQEl0yolov5s_personface/input_layer1
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] PushQEl0yolov5s_personface/input_layer1 | inputs: PreInferEl0yolov5s_personface/input_layer1[0] | outputs: AsyncHwEl(running in thread_id: 30048)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] AsyncHwEl | inputs: PushQEl0yolov5s_personface/input_layer1[0] | outputs: MultiPushQEl0YOLOv5-Post-Process MultiPushQEl0YOLOv5-Post-Process MultiPushQEl0YOLOv5-Post-Process
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] MultiPushQEl0YOLOv5-Post-Process | inputs: AsyncHwEl[0] AsyncHwEl[1] AsyncHwEl[2] | outputs: NmsPPMuxEl0YOLOv5-Post-Process(running in thread_id: 30049)
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] NmsPPMuxEl0YOLOv5-Post-Process | inputs: MultiPushQEl0YOLOv5-Post-Process[0] | outputs: LastAsyncEl0NmsPPMuxEl0YOLOv5-Post-Process
+[2025-05-16 16:55:38.954] [30028] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] LastAsyncEl0NmsPPMuxEl0YOLOv5-Post-Process | inputs: NmsPPMuxEl0YOLOv5-Post-Process[0] | outputs: user
+[2025-05-16 16:57:07.411] [32040] [HailoRT] [info] [vdevice.cpp:523] [create] Creating vdevice with params: device_count: 1, scheduling_algorithm: ROUND_ROBIN, multi_process_service: false
+[2025-05-16 16:57:07.425] [32040] [HailoRT] [info] [device.cpp:49] [Device] OS Version: Linux 6.12.20+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.12.20-1+rpt1~bpo12+1 (2025-03-19) aarch64
+[2025-05-16 16:57:07.434] [32040] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-05-16 16:57:07.434] [32040] [HailoRT] [info] [vdevice.cpp:651] [create] VDevice Infos: 0001:03:00.0
+[2025-05-16 16:57:07.441] [32040] [HailoRT] [info] [control.cpp:108] [control__parse_identify_results] firmware_version is: 4.20.0
+[2025-05-16 16:57:07.680] [32040] [HailoRT] [info] [hef.cpp:1929] [get_network_group_and_network_name] No name was given. Addressing all networks of default network_group: yolov5s_personface
+[2025-05-16 16:57:07.680] [32040] [HailoRT] [info] [hef.cpp:1929] [get_network_group_and_network_name] No name was given. Addressing all networks of default network_group: yolov5s_personface
+[2025-05-16 16:57:07.681] [32040] [HailoRT] [warning] [device_internal.cpp:616] [check_hef_is_compatible] HEF was compiled for Hailo8L device, while the device itself is Hailo8. This will result in lower performance.
+[2025-05-16 16:57:07.681] [32040] [HailoRT] [warning] [device_internal.cpp:616] [check_hef_is_compatible] HEF was compiled for Hailo8L device, while the device itself is Hailo8. This will result in lower performance.
+[2025-05-16 16:57:07.690] [32040] [HailoRT] [info] [internal_buffer_manager.cpp:204] [print_execution_results] Planned internal buffer memory: CMA memory 0, user memory 1969664. memory to edge layer usage factor is 1
+[2025-05-16 16:57:07.690] [32040] [HailoRT] [info] [internal_buffer_manager.cpp:212] [print_execution_results] Default Internal buffer planner executed successfully
+[2025-05-16 16:57:07.728] [32040] [HailoRT] [info] [device_internal.cpp:57] [configure] Configuring HEF took 46.99813 milliseconds
+[2025-05-16 16:57:07.728] [32040] [HailoRT] [info] [vdevice.cpp:749] [configure] Configuring HEF on VDevice took 47.826208 milliseconds
+[2025-05-16 16:57:07.728] [32040] [HailoRT] [info] [infer_model.cpp:436] [configure] Configuring network group 'yolov5s_personface' with params: batch size: 0, power mode: PERFORMANCE, latency: MEASURE
+[2025-05-16 16:57:07.729] [32040] [HailoRT] [info] [multi_io_elements.cpp:756] [create] Created (AsyncHwEl)
+[2025-05-16 16:57:07.729] [32040] [HailoRT] [info] [queue_elements.cpp:450] [create] Created (EntryPushQEl0yolov5s_personface/input_layer1 | timeout: 10s)
+[2025-05-16 16:57:07.729] [32040] [HailoRT] [info] [filter_elements.cpp:101] [create] Created (PreInferEl0yolov5s_personface/input_layer1 | Reorder - src_order: NHWC, src_shape: (640, 640, 3), dst_order: NHCW, dst_shape: (640, 640, 3))
+[2025-05-16 16:57:07.730] [32040] [HailoRT] [info] [queue_elements.cpp:450] [create] Created (PushQEl0yolov5s_personface/input_layer1 | timeout: 10s)
+[2025-05-16 16:57:07.730] [32040] [HailoRT] [info] [multi_io_elements.cpp:135] [create] Created (NmsPPMuxEl0YOLOv5-Post-Process | Op YOLOV5, Name: YOLOv5-Post-Process, Score threshold: 0.200, IoU threshold: 0.60, Classes: 2, Cross classes: false, NMS results order: BY_CLASS, Max bboxes per class: 80, Image height: 640, Image width: 640)
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [queue_elements.cpp:942] [create] Created (MultiPushQEl0YOLOv5-Post-Process | timeout: 10s)
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [edge_elements.cpp:187] [create] Created (LastAsyncEl0NmsPPMuxEl0YOLOv5-Post-Process)
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] EntryPushQEl0yolov5s_personface/input_layer1 | inputs: user | outputs: PreInferEl0yolov5s_personface/input_layer1(running in thread_id: 32059)
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] PreInferEl0yolov5s_personface/input_layer1 | inputs: EntryPushQEl0yolov5s_personface/input_layer1[0] | outputs: PushQEl0yolov5s_personface/input_layer1
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] PushQEl0yolov5s_personface/input_layer1 | inputs: PreInferEl0yolov5s_personface/input_layer1[0] | outputs: AsyncHwEl(running in thread_id: 32060)
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] AsyncHwEl | inputs: PushQEl0yolov5s_personface/input_layer1[0] | outputs: MultiPushQEl0YOLOv5-Post-Process MultiPushQEl0YOLOv5-Post-Process MultiPushQEl0YOLOv5-Post-Process
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] MultiPushQEl0YOLOv5-Post-Process | inputs: AsyncHwEl[0] AsyncHwEl[1] AsyncHwEl[2] | outputs: NmsPPMuxEl0YOLOv5-Post-Process(running in thread_id: 32061)
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] NmsPPMuxEl0YOLOv5-Post-Process | inputs: MultiPushQEl0YOLOv5-Post-Process[0] | outputs: LastAsyncEl0NmsPPMuxEl0YOLOv5-Post-Process
+[2025-05-16 16:57:07.731] [32040] [HailoRT] [info] [pipeline.cpp:891] [print_deep_description] LastAsyncEl0NmsPPMuxEl0YOLOv5-Post-Process | inputs: NmsPPMuxEl0YOLOv5-Post-Process[0] | outputs: user
