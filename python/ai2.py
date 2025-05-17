@@ -79,8 +79,8 @@ def extract_faces_from_tensors(data):
                     int(x1 * face_detector_input_res[0]), 
                     int(y1 * face_detector_input_res[1]))
             score = detection[4]
-            if score > 0.50 and class_id == 1:
-                faces_detected.append([bbox, score])
+            if score > 0.50:  # Remove the class_id check to show both people and faces
+                faces_detected.append([bbox, score, class_id])  # Add class_id to the tuple
     return faces_detected
 
 def crop_faces_from_frame(frame, faces):
@@ -100,19 +100,24 @@ def draw_objects(request):
     global faces_detected, processed_faces, joeys_embedding, face_recognizer
     if faces_detected:
         with MappedArray(request, "main") as m:
-            for i, (bbox, score) in enumerate(faces_detected):
+            for i, (bbox, score, class_id) in enumerate(faces_detected):
                 x0, y0, x1, y1 = bbox
-                # Get the similarity score for this face
-                if i < len(processed_faces):
+                # Different colors for person vs face
+                color = (0, 255, 0) if class_id == 1 else (255, 0, 0)  # Green for faces, Red for people
+                label_type = "Face" if class_id == 1 else "Person"
+                
+                # Get the similarity score for faces only
+                if class_id == 1 and i < len(processed_faces):
                     face = processed_faces[i]
                     face_embedding = face_recognizer.run(face)
                     similarity = cosine_similarity([face_embedding], [joeys_embedding])[0][0]
-                    label = f"Det: %{int(score * 100)} Sim: {similarity:.2f}"
+                    label = f"{label_type}: %{int(score * 100)} Sim: {similarity:.2f}"
                 else:
-                    label = f"Det: %{int(score * 100)}"
-                cv2.rectangle(m.array, (x0, y0), (x1, y1), (0, 255, 0), 2)
+                    label = f"{label_type}: %{int(score * 100)}"
+                
+                cv2.rectangle(m.array, (x0, y0), (x1, y1), color, 2)
                 cv2.putText(m.array, label, (x0 + 5, y0 + 15),
-                          cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
+                          cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1, cv2.LINE_AA)
 
 # Add this function to save a reference face embedding
 def save_reference_face(frame, bbox, filename="face0_emb.npy"):
