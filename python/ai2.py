@@ -97,12 +97,19 @@ def pre_process_crops(cropped_faces):
     return processed_faces
 
 def draw_objects(request):
-    global faces_detected
+    global faces_detected, processed_faces, joeys_embedding, face_recognizer
     if faces_detected:
         with MappedArray(request, "main") as m:
-            for bbox, score in faces_detected:
+            for i, (bbox, score) in enumerate(faces_detected):
                 x0, y0, x1, y1 = bbox
-                label = f" %{int(score * 100)}"
+                # Get the similarity score for this face
+                if i < len(processed_faces):
+                    face = processed_faces[i]
+                    face_embedding = face_recognizer.run(face)
+                    similarity = cosine_similarity([face_embedding], [joeys_embedding])[0][0]
+                    label = f"Det: %{int(score * 100)} Sim: {similarity:.2f}"
+                else:
+                    label = f"Det: %{int(score * 100)}"
                 cv2.rectangle(m.array, (x0, y0), (x1, y1), (0, 255, 0), 2)
                 cv2.putText(m.array, label, (x0 + 5, y0 + 15),
                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
