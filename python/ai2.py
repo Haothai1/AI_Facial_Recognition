@@ -60,12 +60,14 @@ def save_detected_faces(faces, frame):
     
     if current_time - last_save_time >= SAVE_INTERVAL and faces:
         timestamp = int(current_time)
-        for i, (bbox, score) in enumerate(faces):
-            face_img = frame[bbox[1]:bbox[3], bbox[0]:bbox[2]]
-            if face_img.size > 0:
-                filename = f"{FACES_DIR}/face_{timestamp}_{i}_score_{int(score*100)}.jpg"
-                cv2.imwrite(filename, cv2.cvtColor(face_img, cv2.COLOR_RGB2BGR))
-                print(f"Saved {filename}")
+        for i, (bbox, score, class_id) in enumerate(faces):  # Updated to unpack 3 values
+            # Only save faces, not people
+            if class_id == 1:  # Only save face detections
+                face_img = frame[bbox[1]:bbox[3], bbox[0]:bbox[2]]
+                if face_img.size > 0:
+                    filename = f"{FACES_DIR}/face_{timestamp}_{i}_score_{int(score*100)}.jpg"
+                    cv2.imwrite(filename, cv2.cvtColor(face_img, cv2.COLOR_RGB2BGR))
+                    print(f"Saved {filename}")
         last_save_time = current_time
 
 def extract_faces_from_tensors(data):
