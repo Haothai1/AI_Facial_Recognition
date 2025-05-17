@@ -8,24 +8,28 @@
 
 ## Installation
 
-1. Install required system packages:
+1. Install the Raspberry Pi OS.
+
+2. Install the Hailo-RT for Hailo 8 AI accelerator.
+
+3. Install required system packages:
 ```bash
 sudo apt update
 sudo apt install python3
 ```
 
-2. Create and activate a virtual environment:
+4. Create and activate a virtual environment:
 ```bash
 python3 -m venv aienv
 source aienv/bin/activate
 ```
 
-3. Install required Python packages:
+5. Install required Python packages:
 ```bash
 pip install numpy opencv-python scikit-learn
 ```
 
-4. Install Hailo dependencies:
+6. Install Hailo dependencies:
 ```bash
 sudo apt install hailo-python
 ```
