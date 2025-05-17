@@ -114,6 +114,18 @@ def draw_objects(request):
                 cv2.putText(m.array, label, (x0 + 5, y0 + 15),
                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
 
+# Add this function to save a reference face embedding
+def save_reference_face(frame, bbox, filename="face0_emb.npy"):
+    """Save a face as reference embedding"""
+    face_img = frame[bbox[1]:bbox[3], bbox[0]:bbox[2]]
+    if face_img.size > 0:
+        face_resized = cv2.resize(face_img, face_recognizer_input_res)
+        face_embedding = face_recognizer.run(face_resized)
+        np.save(f"{FACES_DIR}/{filename}", face_embedding)
+        print(f"Saved reference face embedding to {FACES_DIR}/{filename}")
+        return True
+    return False
+
 if __name__ == "__main__":
     # Initialize camera
     try:
@@ -160,8 +172,33 @@ if __name__ == "__main__":
         encoder = MJPEGEncoder()
         picam2.start_encoder(encoder, socket_output)
         
-        joeys_embedding = np.load(f"{FACES_DIR}/face0_emb.npy")
+        # Try to load reference face, if not found, we'll capture one
+        try:
+            joeys_embedding = np.load(f"{FACES_DIR}/face0_emb.npy")
+            print("Loaded reference face embedding")
+        except FileNotFoundError:
+            print("No reference face found. Please look at the camera to capture a reference face...")
+            # Wait for a face to be detected
+            while True:
+                frame = picam2.capture_array("lores")
+                face_detector_tensors = face_detector.run(frame)
+                faces_detected = extract_faces_from_tensors(face_detector_tensors)
+                
+                if faces_detected:
+                    # Save the first detected face as reference
+                    if save_reference_face(frame, faces_detected[0][0]):
+                        joeys_embedding = np.load(f"{FACES_DIR}/face0_emb.npy")
+                        print("Reference face captured successfully!")
+                        break
+                
+                # Draw bounding boxes
+                request = picam2.capture_request()
+                draw_objects(request)
+                request.release()
+                
+                time.sleep(0.1)  # Small delay to prevent high CPU usage
         
+        # Main processing loop
         while True:
             start_time = time.time()
             
