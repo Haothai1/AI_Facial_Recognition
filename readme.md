@@ -1,6 +1,6 @@
 # Facial Recognition System Setup
 
-## Prerequisites
+## Required Materials
 - Raspberry Pi with Raspberry Pi OS
 - Hailo-8 AI accelerator
 - Camera module (compatible with Picamera2)
